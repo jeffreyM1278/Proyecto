@@ -1,0 +1,14 @@
+# Environment files (keep the example template)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies and generated output
+**/node_modules/
+**/dist/
+**/build/
+**/coverage/
+
+# Local system files and logs
+.DS_Store
+*.log

@@ -1,0 +1,500 @@
+{
+  "info": {
+    "_postman_id": "a8652da2-medcontrol-api-collection",
+    "name": "MedControl - Maintenance API (Dev 2 - Douglas Moran)",
+    "description": "Colección completa de pruebas para la API REST del Sistema de Gestión de Mantenimiento Preventivo de Equipos Médicos e Industriales (MedControl) - UNICAES Cómputo en la Nube Grupo B.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Health & Diagnostics",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "1. Autenticación (Auth)",
+      "item": [
+        {
+          "name": "Login - Obtener JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    console.log('Token guardado en variable de coleccion');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"douglas.moran@catolica.edu.sv\",\n  \"password\": \"Admin12345!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verificar Perfil (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Inventario de Maquinaria (Equipos - CRUD 1)",
+      "item": [
+        {
+          "name": "Listar Equipos (GET)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/equipment?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["equipment"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Equipo (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serial_number\": \"MX450-2026-SV01\",\n  \"model\": \"IntelliVue MX450\",\n  \"brand\": \"Philips Healthcare\",\n  \"type\": \"Monitor multiparámetro\",\n  \"location_id\": 1,\n  \"status\": \"OPERATIVO\",\n  \"install_date\": \"2026-01-15\",\n  \"maintenance_frequency_days\": 90,\n  \"notes\": \"Equipo ubicado en sala de cuidados intensivos UCI-A\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/equipment",
+              "host": ["{{baseUrl}}"],
+              "path": ["equipment"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar Detalle de Equipo (GET by ID)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/equipment/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["equipment", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Estado Operativo de Equipo (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"EN_MANTENIMIENTO\",\n  \"notes\": \"Se detecta fluctuación en sensor de oximetría, pasando a revisión técnica.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/equipment/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["equipment", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Equipo Dado de Baja (DELETE - Solo ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/equipment/999",
+              "host": ["{{baseUrl}}"],
+              "path": ["equipment", "999"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Órdenes de Trabajo (Work Orders - CRUD 2)",
+      "item": [
+        {
+          "name": "Listar Órdenes de Mantenimiento (GET)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/work-orders?status=PENDIENTE",
+              "host": ["{{baseUrl}}"],
+              "path": ["work-orders"],
+              "query": [
+                { "key": "status", "value": "PENDIENTE" }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Orden de Trabajo (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"equipment_id\": 1,\n  \"type\": \"PREVENTIVO\",\n  \"priority\": \"ALTA\",\n  \"assigned_to\": 2,\n  \"scheduled_date\": \"2026-11-15\",\n  \"description\": \"Mantenimiento trimestral reglamentario según protocolo hospitalario.\",\n  \"checklist\": [\n    \"Calibración de transductores\",\n    \"Revisión de cableado de paciente\",\n    \"Test de fugas eléctricas\",\n    \"Inspección de batería de respaldo\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/work-orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["work-orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar Detalle de Orden (GET by ID)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/work-orders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["work-orders", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Diagnóstico y Progreso (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"EN_PROGRESO\",\n  \"diagnosis\": \"Batería interna con vida útil degradada al 40%. Se procede con recambio preventivo.\",\n  \"spare_parts_used\": [\n    {\n      \"name\": \"Batería Recargable Li-Ion 11.1V\",\n      \"quantity\": 1,\n      \"unit\": \"pieza\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/work-orders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["work-orders", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cerrar Orden de Trabajo (PATCH close)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diagnosis\": \"Equipo calibrado y certificado bajo norma IEC 60601-1. Pruebas de funcionamiento 100% conformes.\",\n  \"notes\": \"Próxima revisión en 90 días.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/work-orders/1/close",
+              "host": ["{{baseUrl}}"],
+              "path": ["work-orders", "1", "close"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Lógica Preventiva Core (Dev 2 Feature)",
+      "item": [
+        {
+          "name": "Calcular Fechas Preventivas de Todos los Equipos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/calculate",
+              "host": ["{{baseUrl}}"],
+              "path": ["maintenance", "calculate"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Mantenimientos Vencidos (Overdue)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/overdue",
+              "host": ["{{baseUrl}}"],
+              "path": ["maintenance", "overdue"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generar Órdenes Preventivas Automáticas (Algoritmo Anti-Duplicados)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/generate-orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["maintenance", "generate-orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cronograma de Calendario Mensual",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/maintenance/schedule?month=11&year=2026",
+              "host": ["{{baseUrl}}"],
+              "path": ["maintenance", "schedule"],
+              "query": [
+                { "key": "month", "value": "11" },
+                { "key": "year", "value": "2026" }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Dashboard Analytics & Sedes",
+      "item": [
+        {
+          "name": "Estadísticas del Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["dashboard", "stats"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Sedes (Hospitales / Plantas)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/locations",
+              "host": ["{{baseUrl}}"],
+              "path": ["locations"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. AWS S3 Documentos Técnicos",
+      "item": [
+        {
+          "name": "Listar Documentos Técnicos de Equipos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/documents",
+              "host": ["{{baseUrl}}"],
+              "path": ["documents"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener URL Prefirmada S3 (Download)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/documents/1/download",
+              "host": ["{{baseUrl}}"],
+              "path": ["documents", "1", "download"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

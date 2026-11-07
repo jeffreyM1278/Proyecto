@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe de Laboratorio - MedControl Backend API - Douglas Moran</title>
+<style>
+  @page {
+    size: letter;
+    margin: 2.5cm;
+  }
+  body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    color: #1a252f;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px;
+    background-color: #ffffff;
+  }
+  .cover {
+    text-align: center;
+    border-bottom: 3px solid #1f618d;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+  }
+  .university {
+    font-size: 20pt;
+    font-weight: 800;
+    color: #154360;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+  }
+  .faculty {
+    font-size: 13pt;
+    color: #566573;
+    margin: 0 0 25px 0;
+    font-weight: 600;
+  }
+  .doc-title {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #1f618d;
+    margin: 30px 0 10px 0;
+    line-height: 1.3;
+  }
+  .doc-subtitle {
+    font-size: 13pt;
+    color: #2c3e50;
+    margin: 0 0 35px 0;
+    font-weight: 500;
+  }
+  .meta-box {
+    margin: 30px auto;
+    padding: 20px 25px;
+    background-color: #f4f9fd;
+    border-left: 6px solid #2980b9;
+    border-radius: 6px;
+    text-align: left;
+    max-width: 650px;
+  }
+  .meta-box table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .meta-box td {
+    padding: 6px 10px;
+    font-size: 11pt;
+    border: none;
+  }
+  .meta-label {
+    font-weight: bold;
+    color: #154360;
+    width: 180px;
+  }
+  h1 {
+    font-size: 16pt;
+    color: #154360;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 6px;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  h2 {
+    font-size: 13pt;
+    color: #1f618d;
+    margin-top: 25px;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 11pt;
+    color: #2c3e50;
+    margin-top: 15px;
+  }
+  p, li {
+    font-size: 10.5pt;
+    text-align: justify;
+  }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+  }
+  table.data-table th {
+    background-color: #1f618d;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 12px;
+    border: 1px solid #1a5276;
+  }
+  table.data-table td {
+    padding: 8px 12px;
+    border: 1px solid #d5dbdb;
+    vertical-align: top;
+  }
+  table.data-table tr:nth-child(even) {
+    background-color: #f9fbfd;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 8.5pt;
+    font-weight: bold;
+  }
+  .badge-success { background-color: #d4efdf; color: #196f3d; }
+  .badge-warning { background-color: #fdebd0; color: #b9770e; }
+  .badge-danger  { background-color: #fadbd8; color: #943126; }
+  .badge-info    { background-color: #ebf5fb; color: #21618c; }
+  pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e5e7e9;
+    border-radius: 6px;
+    padding: 14px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9.5pt;
+    overflow-x: auto;
+    line-height: 1.45;
+  }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background-color: #f2f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+    color: #c0392b;
+  }
+  .card-highlight {
+    background-color: #eaf2f8;
+    border: 1px solid #aed6f1;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin: 20px 0;
+  }
+  .footer {
+    margin-top: 60px;
+    padding-top: 15px;
+    border-top: 1px solid #d5dbdb;
+    font-size: 9pt;
+    color: #7f8c8d;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="university">Universidad Católica de El Salvador</div>
+  <div class="faculty">Facultad de Ingeniería y Arquitectura</div>
+  <div class="doc-title">MEMORIA TÉCNICA DE AVANCE — LABORATORIO</div>
+  <div class="doc-subtitle">Sistema de Gestión de Mantenimiento Preventivo de Equipos Médicos e Industriales (MedControl)</div>
+
+  <div class="meta-box">
+    <table>
+      <tr>
+        <td class="meta-label">Asignatura:</td>
+        <td>Cómputo en la Nube — Grupo B</td>
+      </tr>
+      <tr>
+        <td class="meta-label">Catedrático:</td>
+        <td>Ing. Herberth Contreras</td>
+      </tr>
+      <tr>
+        <td class="meta-label">Fecha de Entrega:</td>
+        <td>Sábado 7 de Noviembre de 2026</td>
+      </tr>
+      <tr>
+        <td class="meta-label">Estudiante:</td>
+        <td><strong>Douglas Moran</strong></td>
+      </tr>
+      <tr>
+        <td class="meta-label">Rol Asignado:</td>
+        <td><strong>Desarrollador 2 (Backend Maintenance API)</strong></td>
+      </tr>
+      <tr>
+        <td class="meta-label">Responsabilidad:</td>
+        <td>Lógica para generación de órdenes de trabajo y cálculo de fechas de mantenimiento preventivo</td>
+      </tr>
+      <tr>
+        <td class="meta-label">Repositorio GitHub:</td>
+        <td><code>https://github.com/jeffreyM1278/Proyecto.git</code></td>
+      </tr>
+      <tr>
+        <td class="meta-label">Rama Evaluada:</td>
+        <td><code>feature/backend-maintenance-api</code></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<h1>1. Resumen Ejecutivo y Matriz de Evaluación</h1>
+<p>
+El presente informe acredita el cumplimiento exhaustivo del 100% de los aspectos requeridos para el <strong>Primer Avance de Laboratorio</strong> según la rúbrica oficial establecida por la cátedra. Como Desarrollador 2, se implementó el motor lógico del sistema <strong>MedControl</strong> mediante una API REST en Node.js y Express con arquitectura en capas limpias, soporte dual para SQL Server y MySQL, almacenamiento en la nube con Amazon S3 y autorización granular basada en roles (RBAC).
+</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th style="width: 35%;">Criterio de Evaluación</th>
+      <th style="width: 15%;">Ponderación</th>
+      <th style="width: 15%;">Estado</th>
+      <th style="width: 35%;">Evidencia Presentada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Repositorio, Git y Estructura</strong></td>
+      <td style="text-align: center;">25%</td>
+      <td style="text-align: center;"><span class="badge badge-success">Cumplido</span></td>
+      <td>Carpeta modular <code>/backend</code>, <code>.gitignore</code> estricto, rama <code>feature/backend-maintenance-api</code> con 10 commits trazables.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Backend, API y Base de Datos</strong></td>
+      <td style="text-align: center;">25%</td>
+      <td style="text-align: center;"><span class="badge badge-success">Cumplido</span></td>
+      <td>Script Sequelize multicompatible (SQL Server / MySQL), 9 módulos REST y 2 CRUDs completos probados con Postman.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Lógica Preventiva (Rol Dev 2)</strong></td>
+      <td style="text-align: center;">Diferenciador</td>
+      <td style="text-align: center;"><span class="badge badge-success">Cumplido</span></td>
+      <td>Motor de cálculo de fechas (días, meses, años) y generación automática de órdenes sin duplicidad.</td>
+    </tr>
+    <tr>
+      <td><strong>4. Infraestructura AWS y Seguridad</strong></td>
+      <td style="text-align: center;">25%</td>
+      <td style="text-align: center;"><span class="badge badge-success">Cumplido</span></td>
+      <td>Amazon S3 con URLs prefirmadas temporales, control IAM/RBAC (solo ADMIN borra) y gestión segura con <code>.env</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>5. Alineación con Frontend (UI)</strong></td>
+      <td style="text-align: center;">25%</td>
+      <td style="text-align: center;"><span class="badge badge-success">Cumplido</span></td>
+      <td>Endpoints adaptados a los campos exactos del diseño MedControl en React + Vite + Tailwind CSS.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>2. Criterio 1: Repositorio, Git y Estructura de Código (25%)</h1>
+<p>
+El backend se estructuró bajo el principio de separación de responsabilidades en el directorio <code>/backend</code>, desacoplando controladores, servicios de negocio, modelos relacionales y validaciones de entrada.
+</p>
+
+<h2>2.1. Historial de Commits en GitHub</h2>
+<p>
+Para evidenciar un avance progresivo y ordenado, el desarrollo se versionó en <strong>10 commits consecutivos</strong> en la rama <code>feature/backend-maintenance-api</code> siguiendo el estándar internacional <em>Conventional Commits</em>:
+</p>
+<pre>
+670bf69 (HEAD) feat(app): configure Express application entry point and add complete README documentation
+3f2fed3 feat(controllers-routes): implement REST endpoints and route handlers for all modules
+0b7fd38 feat(services): implement AWS S3 document management and dashboard analytics
+8c80271 feat(services): add domain services for equipment, technical history, users, and locations
+c7c594a feat(services): implement core maintenance calculation and preventive work order generator
+52a638b feat(validators): create Joi request validation schemas for all modules
+61a9153 feat(middlewares): add JWT authentication, RBAC authorization, and centralized error handler
+611d57a feat(models): implement Sequelize models matching relational database schema
+8d78b97 feat(config): setup core configurations for database, AWS S3, Swagger, and env
+06877e1 chore(backend): initialize Node.js project and environment configuration
+</pre>
+
+<h2>2.2. Seguridad en Git</h2>
+<p>
+El archivo <code>.gitignore</code> garantiza que no se suban dependencias (<code>node_modules/</code>), archivos de entorno con claves reales (<code>.env</code>), logs ni archivos del sistema operativo o IDEs. Se provee <code>.env.example</code> como plantilla de configuración.
+</p>
+
+<h1>3. Criterio 2: Avance de Backend, API y Base de Datos (25%)</h1>
+
+<h2>3.1. Script de Conexión a Base de Datos (SQL Server / MySQL)</h2>
+<p>
+El archivo <code>src/config/database.js</code> implementa Sequelize con *Connection Pooling* (máximo 10 conexiones simultáneas), soporte para zona horaria de El Salvador (CST <code>-06:00</code>) y dialecto dinámico configurable por variable de entorno para adaptarse al motor seleccionado por el equipo:
+</p>
+<pre>
+import { Sequelize } from 'sequelize';
+import config from './index.js';
+
+const dialect = config.db.dialect || 'mssql'; // Soporta SQL Server (diseño de Miguel) o MySQL
+
+const sequelize = new Sequelize(
+  config.db.name,
+  config.db.user,
+  config.db.password,
+  {
+    host: config.db.host,
+    port: config.db.port,
+    dialect,
+    pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
+    logging: config.app.env === 'development' ? console.log : false,
+    dialectOptions: dialect === 'mssql' ? {
+      options: { encrypt: false, trustServerCertificate: true, enableArithAbort: true }
+    } : {}
+  }
+);
+
+export default sequelize;
+</pre>
+
+<h2>3.2. Pruebas de Operaciones CRUD Reales (Postman)</h2>
+
+<h3>CRUD 1: Inventario de Maquinaria (<code>/api/v1/equipment</code>)</h3>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Operación</th>
+      <th>Método y Ruta</th>
+      <th>Payload de Ejemplo / Descripción</th>
+      <th>Respuesta HTTP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Crear</strong></td>
+      <td><code>POST /api/v1/equipment</code></td>
+      <td>Registra nuevo equipo con número de serie, modelo, marca, sede y frecuencia en días.</td>
+      <td><span class="badge badge-success">201 Created</span></td>
+    </tr>
+    <tr>
+      <td><strong>Listar</strong></td>
+      <td><code>GET /api/v1/equipment?page=1&limit=10</code></td>
+      <td>Retorna parque instalado con búsqueda por serie/modelo, filtros de estado y paginación.</td>
+      <td><span class="badge badge-info">200 OK</span></td>
+    </tr>
+    <tr>
+      <td><strong>Actualizar</strong></td>
+      <td><code>PUT /api/v1/equipment/:id</code></td>
+      <td>Actualiza estado operativo (<code>OPERATIVO</code>, <code>EN_MANTENIMIENTO</code>, <code>FUERA_DE_SERVICIO</code>).</td>
+      <td><span class="badge badge-info">200 OK</span></td>
+    </tr>
+    <tr>
+      <td><strong>Eliminar</strong></td>
+      <td><code>DELETE /api/v1/equipment/:id</code></td>
+      <td>Da de baja un equipo. Protegido: <strong>Solo rol ADMIN</strong>.</td>
+      <td><span class="badge badge-danger">200 OK / 403 Forbidden</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>CRUD 2: Órdenes de Mantenimiento (<code>/api/v1/work-orders</code>)</h3>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Operación</th>
+      <th>Método y Ruta</th>
+      <th>Payload de Ejemplo / Descripción</th>
+      <th>Respuesta HTTP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Crear</strong></td>
+      <td><code>POST /api/v1/work-orders</code></td>
+      <td>Crea orden Preventiva o Correctiva con técnico asignado, fecha y checklist en JSON.</td>
+      <td><span class="badge badge-success">201 Created</span></td>
+    </tr>
+    <tr>
+      <td><strong>Listar</strong></td>
+      <td><code>GET /api/v1/work-orders</code></td>
+      <td>Filtra órdenes por estado (<code>PENDIENTE</code>, <code>EN_PROGRESO</code>, <code>COMPLETADA</code>).</td>
+      <td><span class="badge badge-info">200 OK</span></td>
+    </tr>
+    <tr>
+      <td><strong>Actualizar</strong></td>
+      <td><code>PUT /api/v1/work-orders/:id</code></td>
+      <td>Registra avance, diagnóstico técnico y repuestos utilizados.</td>
+      <td><span class="badge badge-info">200 OK</span></td>
+    </tr>
+    <tr>
+      <td><strong>Cerrar</strong></td>
+      <td><code>PATCH /api/v1/work-orders/:id/close</code></td>
+      <td>Cierra la orden, sella la fecha de término y crea el asiento en bitácora técnica.</td>
+      <td><span class="badge badge-info">200 OK</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>4. Lógica Core de Negocio (Valor Agregado del Desarrollador 2)</h1>
+<p>
+El aporte diferencial del rol de Douglas Moran consiste en la automatización del mantenimiento preventivo mediante dos algoritmos implementados en <code>src/services/maintenanceService.js</code>:
+</p>
+
+<h2>4.1. Algoritmo de Cálculo de Fechas Preventivas</h2>
+<p>
+Procesa la última fecha de mantenimiento y la frecuencia establecida en el plan del equipo:
+</p>
+<div class="card-highlight">
+  <strong>Fórmula:</strong><br>
+  <code>FechaPróxima = FechaÚltimoMantenimiento + (FrecuenciaValor × FrecuenciaUnidad)</code><br>
+  <code>DíasRestantes = FechaPróxima - FechaActual</code>
+  <ul>
+    <li><strong>VENCIDO (&lt; 0 días):</strong> Genera alerta crítica roja. Requiere intervención inmediata.</li>
+    <li><strong>PRÓXIMO (0 a 7 días):</strong> Genera alerta preventiva ámbar. Candidato para orden de trabajo.</li>
+    <li><strong>AL DÍA (&gt; 7 días):</strong> Equipo en estado conforme verde.</li>
+  </ul>
+</div>
+
+<h2>4.2. Generador Automático de Órdenes sin Duplicados</h2>
+<p>
+Invocado mediante <code>POST /api/v1/maintenance/generate-orders</code>:
+</p>
+<ol>
+  <li>Identifica todos los equipos activos con estado <strong>VENCIDO</strong> o <strong>PRÓXIMO</strong> (&le; 7 días).</li>
+  <li>Verifica en <code>OrdenesMantenimiento</code> que <strong>NO exista</strong> ya una orden preventiva abierta (en estado <code>PENDIENTE</code> o <code>EN_PROGRESO</code>) para dicho equipo.</li>
+  <li>Si no existe orden previa, crea la orden preventiva con prioridad calculada (<code>ALTA</code> si está vencida, <code>MEDIA</code> si es próxima) y fecha programada.</li>
+  <li>Retorna un reporte detallando cuántas órdenes se crearon y cuántas se omitieron por ya estar en trámite.</li>
+</ol>
+
+<h1>5. Criterio 3: Infraestructura AWS Cloud y Seguridad Inicial (25%)</h1>
+
+<h2>5.1. Almacenamiento en Amazon S3 con URLs Prefirmadas</h2>
+<p>
+Los manuales técnicos y fichas en PDF no se almacenan como binarios en la base de datos para no degradar el rendimiento relacional. Se utiliza el bucket de Amazon S3:
+</p>
+<ul>
+  <li><strong>Carga:</strong> Se sube mediante <code>PutObjectCommand</code> del SDK oficial <code>@aws-sdk/client-s3</code>.</li>
+  <li><strong>Descarga Segura:</strong> El bucket se mantiene totalmente privado. Para visualizar o descargar un documento, el endpoint <code>GET /api/v1/documents/:id/download</code> genera una <strong>URL prefirmada temporal</strong> (con expiración de 15 minutos) usando <code>@aws-sdk/s3-request-presigner</code>.</li>
+</ul>
+
+<h2>5.2. Control de Acceso Basado en Roles (AWS IAM / RBAC)</h2>
+<p>
+Se configuró un middleware de autorización que restringe las acciones según el rol del usuario:
+</p>
+<ul>
+  <li><code>ADMIN</code>: Acceso total. <strong>Único perfil autorizado para operaciones <code>DELETE</code></strong>.</li>
+  <li><code>SUPERVISOR</code>: Lectura total, creación y actualización de órdenes y programación.</li>
+  <li><code>TECNICO</code>: Visualización de órdenes asignadas, actualización de diagnósticos y bitácora técnica.</li>
+</ul>
+
+<h1>6. Recursos y Archivos Entregables</h1>
+<ol>
+  <li><strong>Colección de Postman:</strong> Archivo <code>MedControl-API.postman_collection.json</code> ubicado en la raíz de <code>/backend</code>, listo para importar.</li>
+  <li><strong>Documentación Swagger UI:</strong> Disponible de forma interactiva en <code>http://localhost:3000/api-docs</code>.</li>
+  <li><strong>Código Fuente en GitHub:</strong> Rama oficial <code>feature/backend-maintenance-api</code> en el repositorio <code>https://github.com/jeffreyM1278/Proyecto.git</code>.</li>
+</ol>
+
+<div class="footer">
+  Universidad Católica de El Salvador (UNICAES) — Cómputo en la Nube Grupo B — Ing. Herberth Contreras<br>
+  Memoria Técnica Desarrollador 2: Douglas Moran — Sábado 7 de Noviembre de 2026
+</div>
+
+</body>
+</html>
